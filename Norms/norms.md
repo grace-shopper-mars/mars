@@ -33,3 +33,6 @@ Is it okay to work on your own after hours? How do we keep the group informed? D
 
 What time does this group have daily stand up?
   5 mins after Reacto/Morning Lecture
+
+
+test
