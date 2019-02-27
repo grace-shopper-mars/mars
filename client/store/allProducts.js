@@ -10,7 +10,7 @@ const gotAllProducts = products => ({
 })
 
 //Thunk creators
-export const getAllProductsThunk = async dispatch => {
+export const getAllProductsThunk = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/products')
     dispatch(gotAllProducts(data))
