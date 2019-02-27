@@ -15,3 +15,4 @@ const Order = db.define('order', {
 })
 
 module.exports = Order
+// Creating this change in order to push again and hopefully resolve the communication issue between Travis and GitHub.
