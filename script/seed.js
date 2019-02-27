@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Product} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -22,7 +22,44 @@ async function seed() {
     })
   ])
 
-  console.log(`seeded ${users.length} users`)
+  const products = await Promise.all([
+    Product.create({
+      name: 'Quackers',
+      imageUrl:
+        'https://www.munchkin.com/media/catalog/product/3/1/31001_white_hot_safety_bath_ducky.jpg',
+      price: 9.99,
+      description:
+        'Quackers is your average rubber duck, perfectly suitable to talk through any task with you. She is your classic “jack of all trades, master on none” duck.'
+    }),
+    Product.create({
+      name: 'Rosie',
+      imageUrl:
+        'https://www.amsterdamduckstore.com/wp-content/uploads/2017/03/Rosie-the-Riveter-Rubber-Duck-Amsterdam-Duck-Store.jpg',
+      price: 9.99,
+      description:
+        'Rosie is the perfect companion for when you are the only female programmer in the office. She promises to never mansplain to you.'
+    }),
+    Product.create({
+      name: 'Mae',
+      imageUrl:
+        'https://amsterdamduckstore.com/wp-content/uploads/2015/11/space-rubber-duck-e1465486677405.jpg',
+      price: 9.99,
+      description:
+        'Mae is perfect for helping you think outside of the box. She will make your code out of this world.'
+    }),
+    Product.create({
+      name: 'Lester',
+      imageUrl:
+        'https://isteam.wsimg.com/neb/obj/RjI3NDdDNkNBQ0Q5RTlDQ0Q4MkQ6MTAwMzlmMmRmMzk0MGEzNzkyNjk5MWFmNWI5NmQzNDE6Ojo6OjA=/:/rs=w:600,h:600',
+      price: 9.99,
+      description:
+        'Quite frankly, Lester is obnoxious. He thinks he knows more than you. He doesn’t but good luck telling him that.'
+    })
+  ])
+
+  console.log(
+    `seeded ${users.length} users, seeded ${products.length} products`
+  )
   console.log(`seeded successfully`)
 }
 

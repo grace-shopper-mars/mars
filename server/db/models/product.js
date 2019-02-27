@@ -15,7 +15,7 @@ const Product = db.define('product', {
   price: {
     type: Sequelize.DECIMAL(3, 2)
   },
-  decription: {
+  description: {
     type: Sequelize.TEXT
   }
 })
