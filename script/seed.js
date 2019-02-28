@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product} = require('../server/db/models')
+const {User, Product, Order, OrderProduct} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -57,8 +57,28 @@ async function seed() {
     })
   ])
 
+  const orders = await Order.bulkCreate([
+    {
+      boughtStatus: true,
+      shippingAddress: 'New York',
+      billingAddress: 'New York'
+    },
+    {
+      boughtStatus: false,
+      shippingAddress: 'New Haven',
+      billingAddress: 'New Haven'
+    },
+    {
+      boughtStatus: true,
+      shippingAddress: 'New Mexico',
+      billingAddress: 'New Mexico'
+    }
+  ])
+
   console.log(
-    `seeded ${users.length} users, seeded ${products.length} products`
+    `seeded ${users.length} users, seeded ${products.length} products, ${
+      orders.length
+    } orders`
   )
   console.log(`seeded successfully`)
 }
