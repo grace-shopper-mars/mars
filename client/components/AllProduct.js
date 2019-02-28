@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getAllProductsThunk} from '../store/allProducts'
+import {Link} from 'react-router-dom'
 
 class AllProducts extends React.Component {
   componentDidMount() {
@@ -8,27 +9,25 @@ class AllProducts extends React.Component {
   }
 
   render() {
-    console.log('PROPS: ', this.props)
     return (
       <div className="allProducts">
         <h1>All Producks</h1>
-        <ul>
-          {this.props.products.map(duck => (
-            <li key={duck.id}>
-              <h5>{duck.name}</h5>
+        <div className="ducks">
+          {this.props.allProducts.map(duck => (
+            <div key={duck.id}>
+              <Link to={`/products/${duck.id}`}>{duck.name}</Link>
               <img src={duck.imageUrl} width="100px" />
               <p>${duck.price}</p>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
-  console.log('STATE: ', state)
-  return {products: state.products}
+  return {allProducts: state.products.allProducts}
 }
 
 const mapDispatchToProps = dispatch => ({
