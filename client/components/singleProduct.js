@@ -9,13 +9,6 @@ class SingleProduct extends React.Component {
     this.props.loadOneDuck(productId)
   }
 
-  componentDidUpdate(prevProps) {
-    const productId = this.props.match.params.productId
-    if (prevProps.match.params.productId !== productId) {
-      this.props.loadOneDuck(productId)
-    }
-  }
-
   render() {
     const currentProduct = this.props.currentProduct
     return (

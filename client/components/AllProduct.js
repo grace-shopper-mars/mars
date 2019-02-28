@@ -11,8 +11,8 @@ class AllProducts extends React.Component {
   render() {
     return (
       <div className="allProducts">
-        <h1>All Producks</h1>
-        <ul>
+        <h1>Producks</h1>
+        <div className="ducks">
           {this.props.allProducts.map(duck => (
             <div key={duck.id}>
               <Link to={`/products/${duck.id}`}>{duck.name}</Link>
@@ -20,7 +20,7 @@ class AllProducts extends React.Component {
               <p>${duck.price}</p>
             </div>
           ))}
-        </ul>
+        </div>
       </div>
     )
   }
