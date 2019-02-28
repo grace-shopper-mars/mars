@@ -11,7 +11,7 @@ class AllProducts extends React.Component {
   render() {
     return (
       <div className="allProducts">
-        <h1>Producks</h1>
+        <h1>All Producks</h1>
         <div className="ducks">
           {this.props.allProducts.map(duck => (
             <div key={duck.id}>
