@@ -4,7 +4,7 @@ const db = require('../db')
 const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
-    //unique: true, // Do we want product names to have to be unique?
+    unique: true,
     allowNull: false
   },
   imageUrl: {
