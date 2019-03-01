@@ -66,7 +66,8 @@ async function seed() {
     {
       boughtStatus: false,
       shippingAddress: 'New Haven',
-      billingAddress: 'New Haven'
+      billingAddress: 'New Haven',
+      userId: 1
     },
     {
       boughtStatus: true,
