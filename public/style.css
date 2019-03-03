@@ -23,4 +23,26 @@ form div {
 .ducks {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.oneDuck {
+  display: flex;
+  flex-direction: column;
+}
+
+.oneProduct {
+  display: flex;
+}
+
+.duckPic {
+  flex: 1;
+}
+
+.productInfo {
+  flex: 2;
+}
+
+.backToProducts {
+  flex: 1;
 }

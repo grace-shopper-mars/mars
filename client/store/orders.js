@@ -14,7 +14,7 @@ export const getCart = userId => async dispatch => {
   try {
     console.log('userId in thunk creator: ', userId)
     const {data} = await axios.put('/api/orders/cart', {userId})
-    dispatch(gotCart(data))
+    dispatch(gotCart(data[0]))
   } catch (err) {
     console.log(err)
   }
