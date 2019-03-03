@@ -2,12 +2,16 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  AllProduct,
+  SingleProduct,
+  Cart
+} from './components'
 import {me} from './store'
 import {getCart} from './store/orders'
-import AllProduct from './components/AllProduct'
-import SingleProduct from './components/singleProduct'
-import Cart from './components/cart'
 
 /**
  * COMPONENT

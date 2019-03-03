@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {OrderProduct} = require('../db/models')
+const {OrderProduct, Product} = require('../db/models')
 module.exports = router
 
 router.post('/', async (req, res, next) => {
@@ -21,6 +21,27 @@ router.post('/', async (req, res, next) => {
       }
     })
     res.json(orderProduct)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:orderId', async (req, res, next) => {
+  try {
+    console.log('we hit the backend get request orderProducts')
+    const orderId = req.params.orderId
+    console.log(orderId)
+    const cartItems = await OrderProduct.findAll({
+      where: {
+        orderId
+      },
+      include: [
+        {
+          model: Product
+        }
+      ]
+    })
+    res.json(cartItems)
   } catch (error) {
     next(error)
   }

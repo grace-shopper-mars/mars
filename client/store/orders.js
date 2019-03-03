@@ -30,8 +30,12 @@ const ordersInitialState = {
 export default function(state = ordersInitialState, action) {
   switch (action.type) {
     case GOT_CART:
-      return {...state, cart: action.cart}
+      console.log('state in orders reducer: ', state)
+      const newState = {...state, cart: action.cart}
+      console.log('new state in orders reducer: ', newState)
+      return newState
     default:
+      console.log('we hit default')
       return state
   }
 }
