@@ -3,15 +3,8 @@ import {connect} from 'react-redux'
 import {getCartItems} from '../store/orderProduct'
 
 class Cart extends React.Component {
-  componentDidMount() {
-    //console.log('cart inside Mount: ', this.props.cart)
-    //this.props.loadCartItems(this.props.cart.id)
-  }
-
   componentDidUpdate(prevProps) {
-    //console.log('curr cart: ', this.props.cart, 'prev cart: ', prevProps.cart)
     if (this.props.cart !== prevProps.cart) {
-      console.log('this.props.cart.id: ', this.props.cart.id)
       this.props.loadCartItems(this.props.cart.id)
     }
   }
@@ -19,7 +12,6 @@ class Cart extends React.Component {
   render() {
     const cartItems = this.props.items
     if (cartItems && cartItems.length) {
-      console.log('props: ', this.props)
       return (
         <div>
           <h3>Cart</h3>
@@ -50,7 +42,6 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = state => {
-  //console.log('state inside cart: ', state)
   return {
     items: state.orderProduct.items, // Rows from OrderProduct table
     cart: state.orders.cart // Row from Order table
