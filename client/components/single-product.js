@@ -7,7 +7,7 @@ import axios from 'axios'
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {value: 1}
+    this.state = {value: '1'}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -39,8 +39,24 @@ class SingleProduct extends React.Component {
         console.log(err)
       }
     } else {
-      localStorage.setItem(this.props.currentProduct.name, this.state.value)
-      console.log(localStorage)
+      const item = {
+        productId: this.props.currentProduct.id,
+        quantity,
+        product: this.props.currentProduct
+      }
+      const guestCart = JSON.parse(localStorage.getItem('guestCart'))
+      if (guestCart.length === 0) {
+        guestCart.push(item)
+      } else {
+        for (let i = 0; i < guestCart.length; i++) {
+          if (guestCart[i].productId === item.productId) {
+            guestCart[i].quantity = item.quantity
+          } else if (i === guestCart.length - 1) {
+            guestCart.push(item)
+          }
+        }
+      }
+      localStorage.setItem('guestCart', JSON.stringify(guestCart))
     }
   }
 

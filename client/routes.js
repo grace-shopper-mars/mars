@@ -20,6 +20,9 @@ import {getCart} from './store/orders'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+    if (!localStorage.getItem('guestCart')) {
+      localStorage.setItem('guestCart', JSON.stringify([]))
+    }
   }
 
   componentDidUpdate(prevProps) {
