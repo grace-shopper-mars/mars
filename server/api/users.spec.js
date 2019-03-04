@@ -15,12 +15,14 @@ describe('User routes', () => {
     const codysEmail = 'cody@puppybook.com'
     const codysFirstName = 'Cody'
     const codysLastName = 'Bones'
+    const codyAdmin = true
 
     beforeEach(() => {
       return User.create({
         email: codysEmail,
         firstName: codysFirstName,
-        lastName: codysLastName
+        lastName: codysLastName,
+        isAdmin: codyAdmin
       })
     })
 
