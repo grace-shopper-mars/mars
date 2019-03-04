@@ -56,6 +56,16 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const update = (user, editForm) => async dispatch => {
+  try {
+    const {data} = await axios.put(`auth/edit/${user.id}`, editForm)
+    dispatch(getUser(data))
+    history.push('/home')
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 /**
  * REDUCER
  */

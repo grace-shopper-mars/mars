@@ -19,18 +19,36 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/cart', async (req, res, next) => {
+router.put('/cart', async (req, res, next) => {
   try {
     const order = await Order.findOrCreate({
-      where: {boughtStatus: false},
-      include: [
-        {
-          model: OrderProduct
-        }
-      ]
+      where: {boughtStatus: false, userId: req.body.userId}
+      // include: [
+      //   {
+      //     model: OrderProduct
+      //   }
+      // ]
     })
 
     res.json(order)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/checkout', async (req, res, next) => {
+  try {
+    const updatedOrder = await Order.update(
+      {
+        boughtStatus: true,
+        shippingAddress: req.body.shippingAddress,
+        billingAddress: req.body.billingAddress
+      },
+      {
+        where: {id: req.body.id}
+      }
+    )
+    res.json(updatedOrder)
   } catch (error) {
     next(error)
   }

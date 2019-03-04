@@ -2,10 +2,17 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  AllProduct,
+  SingleProduct,
+  Cart
+} from './components'
 import {me} from './store'
-import AllProduct from './components/AllProduct'
-import SingleProduct from './components/singleProduct'
+import EditUserForm from './components/edit-user-form'
+import {getCart} from './store/orders'
 
 /**
  * COMPONENT
@@ -13,6 +20,13 @@ import SingleProduct from './components/singleProduct'
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
+  }
+
+  componentDidUpdate(prevProps) {
+    const userId = this.props.userId
+    if (userId !== prevProps.userId) {
+      this.props.loadCart(userId)
+    }
   }
 
   render() {
@@ -25,6 +39,8 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/products" component={AllProduct} />
         <Route path="/products/:productId" component={SingleProduct} />
+        <Route path="/edit" component={EditUserForm} />
+        <Route path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -32,7 +48,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={AllProduct} />
       </Switch>
     )
   }
@@ -45,7 +61,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id
   }
 }
 
@@ -53,6 +70,9 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+    },
+    loadCart(userId) {
+      dispatch(getCart(userId))
     }
   }
 }

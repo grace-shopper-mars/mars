@@ -3,6 +3,7 @@ import axios from 'axios'
 //Action types
 const GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS'
 const GOT_ONE_PRODUCT = 'GOT_ONE_PRODUCT'
+const GOT_ERROR = 'GOT_ERROR'
 
 //Action creators
 const gotAllProducts = products => ({
@@ -37,7 +38,9 @@ export const getOneProductThunk = productId => async dispatch => {
 //initial state
 const productInitialState = {
   allProducts: [],
-  currentProduct: {}
+  currentProduct: {},
+  error: null,
+  loading: false
 }
 
 //reducer
