@@ -12,7 +12,6 @@ const gotCartItems = items => ({
 //Thunk creators
 export const getCartItems = orderId => async dispatch => {
   try {
-    console.log('getCartItems got called with :', orderId)
     const {data} = await axios.get(`/api/orderProducts/${orderId}`)
     dispatch(gotCartItems(data))
   } catch (err) {
@@ -29,10 +28,8 @@ const orderProductsInitialState = {
 export default function(state = orderProductsInitialState, action) {
   switch (action.type) {
     case GOT_CART_ITEMS:
-      console.log('GOT_CART_ITEMS got called')
       return {...state, items: action.items}
     default:
-      console.log('default in orderProducts reducer')
       return state
   }
 }
