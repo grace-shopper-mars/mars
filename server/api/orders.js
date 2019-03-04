@@ -19,15 +19,15 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/cart', async (req, res, next) => {
+router.put('/cart', async (req, res, next) => {
   try {
     const order = await Order.findOrCreate({
-      where: {boughtStatus: false},
-      include: [
-        {
-          model: OrderProduct
-        }
-      ]
+      where: {boughtStatus: false, userId: req.body.userId}
+      // include: [
+      //   {
+      //     model: OrderProduct
+      //   }
+      // ]
     })
 
     res.json(order)
