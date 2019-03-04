@@ -35,3 +35,21 @@ router.put('/cart', async (req, res, next) => {
     next(error)
   }
 })
+
+router.put('/checkout', async (req, res, next) => {
+  try {
+    const updatedOrder = await Order.update(
+      {
+        boughtStatus: true,
+        shippingAddress: req.body.shippingAddress,
+        billingAddress: req.body.billingAddress
+      },
+      {
+        where: {id: req.body.id}
+      }
+    )
+    res.json(updatedOrder)
+  } catch (error) {
+    next(error)
+  }
+})
