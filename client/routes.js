@@ -11,6 +11,7 @@ import {
   Cart
 } from './components'
 import {me} from './store'
+import EditUserForm from './components/edit-user-form'
 import {getCart} from './store/orders'
 
 /**
@@ -39,6 +40,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/products" component={AllProduct} />
         <Route path="/products/:productId" component={SingleProduct} />
+        <Route path="/edit" component={EditUserForm} />
         <Route path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>

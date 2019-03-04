@@ -32,6 +32,18 @@ router.post('/signup', async (req, res, next) => {
   }
 })
 
+router.put('/edit/:id', async (req, res, next) => {
+  try {
+    const [, [user]] = await User.update(req.body, {
+      where: {id: req.params.id},
+      returning: true
+    })
+    res.json(user)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/logout', (req, res) => {
   req.logout()
   req.session.destroy()
