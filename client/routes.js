@@ -24,7 +24,6 @@ class Routes extends Component {
 
   componentDidUpdate(prevProps) {
     const userId = this.props.userId
-    console.log('userId :', userId)
     if (userId !== prevProps.userId) {
       this.props.loadCart(userId)
     }
@@ -49,7 +48,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route component={AllProduct} />
       </Switch>
     )
   }
