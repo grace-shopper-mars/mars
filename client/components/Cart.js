@@ -9,6 +9,10 @@ class Cart extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentDidMount() {
+    this.props.loadCartItems(this.props.cart.id)
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.cart !== prevProps.cart) {
       this.props.loadCartItems(this.props.cart.id)
