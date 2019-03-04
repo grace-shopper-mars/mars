@@ -34,10 +34,10 @@ router.post('/signup', async (req, res, next) => {
 
 router.put('/edit/:id', async (req, res, next) => {
   try {
-    await User.update(req.body, {
-      where: {id: req.params.id}
+    const [, [user]] = await User.update(req.body, {
+      where: {id: req.params.id},
+      returning: true
     })
-    const user = await User.findById(req.params.id)
     res.json(user)
   } catch (error) {
     next(error)
