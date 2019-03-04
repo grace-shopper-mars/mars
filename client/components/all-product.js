@@ -11,12 +11,12 @@ class AllProducts extends React.Component {
   render() {
     return (
       <div className="allProducts">
-        <h1>All Producks</h1>
+        <h1>Producks</h1>
         <div className="ducks">
           {this.props.allProducts.map(duck => (
-            <div key={duck.id}>
+            <div className="oneDuck" key={duck.id}>
+              <img src={duck.imageUrl} width="300px" height="300px" />
               <Link to={`/products/${duck.id}`}>{duck.name}</Link>
-              <img src={duck.imageUrl} width="100px" />
               <p>${duck.price}</p>
             </div>
           ))}
