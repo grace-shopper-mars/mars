@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const {Order, OrderProduct} = require('../db/models')
+const isAdmin = require('../auth/isAdmin-middleware')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/', [isAdmin], async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       where: {boughtStatus: true},
@@ -22,14 +23,11 @@ router.get('/', async (req, res, next) => {
 router.put('/cart', async (req, res, next) => {
   try {
     const order = await Order.findOrCreate({
-      where: {boughtStatus: false, userId: req.body.userId}
-      // include: [
-      //   {
-      //     model: OrderProduct
-      //   }
-      // ]
+      where: {boughtStatus: false, userId: req.session.passport.user}
     })
-
+    if (!req.session.order) {
+      req.session.order = order[0].id
+    }
     res.json(order)
   } catch (error) {
     next(error)
@@ -45,9 +43,10 @@ router.put('/checkout', async (req, res, next) => {
         billingAddress: req.body.billingAddress
       },
       {
-        where: {id: req.body.id}
+        where: {id: req.session.order}
       }
     )
+    req.session.order = null
     res.json(updatedOrder)
   } catch (error) {
     next(error)

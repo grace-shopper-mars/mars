@@ -1,14 +1,13 @@
 const router = require('express').Router()
 const {OrderProduct, Product} = require('../db/models')
-const isAdmin = require('../auth/isAdmin-middleware')
 module.exports = router
 
-router.post('/', [isAdmin], async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const orderProduct = await OrderProduct.findOne({
       where: {
         productId: req.body.productId,
-        orderId: req.body.orderId
+        orderId: req.session.order
       }
     }).then(function(row) {
       if (row) {
@@ -16,7 +15,7 @@ router.post('/', [isAdmin], async (req, res, next) => {
       } else {
         return OrderProduct.create({
           productId: req.body.productId,
-          orderId: req.body.orderId,
+          orderId: req.session.order,
           quantity: req.body.quantity
         })
       }
@@ -30,7 +29,7 @@ router.post('/', [isAdmin], async (req, res, next) => {
 router.get('/:orderId', async (req, res, next) => {
   try {
     console.log('we hit the backend get request orderProducts')
-    const orderId = req.params.orderId
+    const orderId = req.session.order
     console.log(orderId)
     const cartItems = await OrderProduct.findAll({
       where: {
