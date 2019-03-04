@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const {OrderProduct, Product} = require('../db/models')
+const isAdmin = require('../auth/isAdmin-middleware')
 module.exports = router
 
-router.post('/', async (req, res, next) => {
+router.post('/', [isAdmin], async (req, res, next) => {
   try {
     const orderProduct = await OrderProduct.findOne({
       where: {
