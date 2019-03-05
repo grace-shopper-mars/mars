@@ -72,26 +72,26 @@ class SingleProduct extends React.Component {
           className="duckPic"
         />
         <div className="productInfo">
-          <h3>{currentProduct.name}</h3>
+          <h2 className="productName">{currentProduct.name}</h2>
           <p className="price">${currentProduct.price}</p>
           <p className="description">{currentProduct.description}</p>
           <form onSubmit={this.handleSubmit}>
-            <select value={this.state.value} onChange={this.handleChange}>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            <div className="quantity">
+              <h4 className="quantName">Quantity:</h4>
+              <select value={this.state.value} onChange={this.handleChange}>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
             <button className="addToCart" type="submit">
-              Add to cart
+              ADD TO CART
             </button>
           </form>
         </div>
         <p />
-        <Link to="/products" className="backToProducts">
-          Back to all Producks
-        </Link>
       </div>
     )
   }

@@ -11,14 +11,15 @@ class AllProducts extends React.Component {
   render() {
     return (
       <div className="allProducts">
-        <h1>Producks</h1>
         <div className="ducks">
           {this.props.allProducts.map(duck => (
-            <div className="oneDuck" key={duck.id}>
-              <img src={duck.imageUrl} width="300px" height="300px" />
-              <Link to={`/products/${duck.id}`}>{duck.name}</Link>
-              <p>${duck.price}</p>
-            </div>
+            <Link className="link" key={duck.id} to={`/products/${duck.id}`}>
+              <div className="oneDuck">
+                <img src={duck.imageUrl} width="300px" height="300px" />
+                <p>{duck.name}</p>
+                <p>${duck.price}</p>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
