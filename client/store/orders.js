@@ -11,11 +11,15 @@ const gotCart = cart => ({
 
 //Thunk creators
 export const getCart = userId => async dispatch => {
-  try {
-    const {data} = await axios.put('/api/orders/cart', {userId})
-    dispatch(gotCart(data[0]))
-  } catch (err) {
-    console.log(err)
+  if (userId) {
+    try {
+      const {data} = await axios.put('/api/orders/cart', {userId})
+      dispatch(gotCart(data[0]))
+    } catch (err) {
+      console.log(err)
+    }
+  } else {
+    dispatch(gotCart({}))
   }
 }
 
