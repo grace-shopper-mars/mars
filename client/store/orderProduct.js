@@ -3,6 +3,7 @@ import axios from 'axios'
 //Action types
 const GOT_CART_ITEMS = 'GOT_CART_ITEMS'
 const ITEM_EDITED = 'ITEM_EDITED'
+const ITEM_DELETED = 'ITEM_DELETED'
 
 //Action creators
 const gotCartItems = items => ({
@@ -13,6 +14,11 @@ const gotCartItems = items => ({
 const itemEdited = item => ({
   type: ITEM_EDITED,
   item
+})
+
+const itemDeleted = productId => ({
+  type: ITEM_DELETED,
+  productId
 })
 
 //Thunk creators
@@ -41,6 +47,15 @@ export const editItem = (quantity, productId) => async dispatch => {
   }
 }
 
+export const deleteItem = productId => async dispatch => {
+  try {
+    await axios.delete(`/api/orderProducts/${productId}`)
+    dispatch(itemDeleted(productId))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 //initial state
 const orderProductsInitialState = {
   items: []
@@ -63,6 +78,11 @@ export default function(state = orderProductsInitialState, action) {
             return item
           }
         })
+      }
+    case ITEM_DELETED:
+      return {
+        ...state,
+        items: state.items.filter(item => item.productId !== action.productId)
       }
     default:
       return state

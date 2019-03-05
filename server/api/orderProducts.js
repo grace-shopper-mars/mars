@@ -47,6 +47,20 @@ router.put('/:productId', async (req, res, next) => {
   }
 })
 
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    await OrderProduct.destroy({
+      where: {
+        productId: req.params.productId,
+        orderId: req.session.order
+      }
+    })
+    res.sendStatus(204)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/:orderId', async (req, res, next) => {
   try {
     console.log('we hit the backend get request orderProducts')
