@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getCartItems, editItem} from '../store/orderProduct'
+import {getCartItems, editItem, deleteItem} from '../store/orderProduct'
 import axios from 'axios'
 
 class Cart extends React.Component {
@@ -54,6 +54,12 @@ class Cart extends React.Component {
     // then do guestCart
   }
 
+  handleDeleteItem(evt, productId) {
+    if (this.props.isLoggedIn) {
+      this.props.removeFromCart(productId)
+    }
+  }
+
   render() {
     console.log('render triggered')
     let cartItems
@@ -84,6 +90,12 @@ class Cart extends React.Component {
                 <option value="5">5</option>
               </select>
               <p>Price: ${item.product.price}</p>
+              <button
+                type="button"
+                onClick={event => this.handleDeleteItem(event, item.productId)}
+              >
+                Remove from cart
+              </button>
             </div>
           ))}
         </div>
@@ -122,7 +134,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   loadCartItems: orderId => dispatch(getCartItems(orderId)),
   updateQuantity: (quantity, productId) =>
-    dispatch(editItem(quantity, productId))
+    dispatch(editItem(quantity, productId)),
+  removeFromCart: productId => dispatch(deleteItem(productId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
