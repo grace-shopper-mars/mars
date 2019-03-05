@@ -72,14 +72,38 @@ form div {
 
 .duckPic {
   flex: 1;
+  padding: 2em;
 }
 
 .productInfo {
   flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 2em;
 }
 
-.backToProducts {
-  flex: 1;
+.addToCart {
+  background-color: gray;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.addToCart:hover {
+  color: #5c5c5c;
+  border-radius: 2px;
+  background-color: rgb(250, 250, 250);
+  box-shadow: #d3d3d3;
+  border: solid;
+}
+
+.quantity {
+  display: flex;
 }
 
 * {
