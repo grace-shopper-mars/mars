@@ -5,8 +5,14 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>ProDucks</h1>
+  <div className="navbar">
+    <div className="logoSet">
+      <img
+        className="logo"
+        src="http://pngimg.com/uploads/rubber_duck/rubber_duck_PNG49.png"
+      />
+      <h1>ProDucks</h1>
+    </div>
     <nav>
       {isLoggedIn ? (
         <div>
@@ -28,7 +34,6 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         </div>
       )}
     </nav>
-    <hr />
   </div>
 )
 
