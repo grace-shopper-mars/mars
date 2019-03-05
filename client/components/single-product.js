@@ -7,7 +7,7 @@ import axios from 'axios'
 class SingleProduct extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {value: 1}
+    this.state = {value: '1'}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -21,21 +21,43 @@ class SingleProduct extends React.Component {
   }
 
   async handleSubmit(evt) {
-    try {
-      evt.preventDefault()
-      const quantity = this.state.value
-      const item = await axios.post('/api/orderProducts', {
+    evt.preventDefault()
+    const quantity = this.state.value
+    if (this.props.isLoggedIn) {
+      try {
+        const item = await axios.post('/api/orderProducts', {
+          productId: this.props.currentProduct.id,
+          orderId: this.props.cart.id,
+          quantity
+        })
+        alert(
+          `${this.state.value} of the item ${
+            this.props.currentProduct.name
+          } added to cart!`
+        )
+      } catch (err) {
+        console.log(err)
+      }
+    } else {
+      const item = {
         productId: this.props.currentProduct.id,
-        orderId: this.props.cart.id,
-        quantity
-      })
-      alert(
-        `${this.state.value} of the item ${
-          this.props.currentProduct.name
-        } added to cart!`
-      )
-    } catch (err) {
-      console.log(err)
+        quantity,
+        product: this.props.currentProduct
+      }
+      const guestCart = JSON.parse(localStorage.getItem('guestCart'))
+      if (guestCart.length === 0) {
+        guestCart.push(item)
+      } else {
+        for (let i = 0; i < guestCart.length; i++) {
+          if (guestCart[i].productId === item.productId) {
+            guestCart[i].quantity = item.quantity
+            break
+          } else if (i === guestCart.length - 1) {
+            guestCart.push(item)
+          }
+        }
+      }
+      localStorage.setItem('guestCart', JSON.stringify(guestCart))
     }
   }
 
@@ -78,7 +100,8 @@ class SingleProduct extends React.Component {
 const mapStateToProps = state => {
   return {
     currentProduct: state.products.currentProduct,
-    cart: state.orders.cart
+    cart: state.orders.cart,
+    isLoggedIn: !!state.user.id
   }
 }
 
