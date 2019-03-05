@@ -7,24 +7,21 @@ class Cart extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      guestCart: {}
+      guestCart: JSON.parse(localStorage.getItem('guestCart'))
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
-    if (this.props.cart.id) {
-      this.props.loadCartItems(this.props.cart.id)
-    } else {
-      this.setState({
-        guestCart: JSON.parse(localStorage.getItem('guestCart'))
-      })
-    }
+    this.props.loadCartItems(this.props.cart.id)
+    console.log('mount cart = ', this.props.cart)
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.cart !== prevProps.cart) {
+    if (this.props.cart !== prevProps.cart && this.props.isLoggedIn) {
+      console.log('user logged in at update')
       this.props.loadCartItems(this.props.cart.id)
+      console.log('update cart = ', this.props.cart)
     }
   }
 
@@ -43,6 +40,8 @@ class Cart extends React.Component {
       } catch (err) {
         console.log(err)
       }
+    } else {
+      alert('You have to be logged in to checkout!')
     }
   }
 
@@ -50,7 +49,7 @@ class Cart extends React.Component {
     let cartItems
     if (this.props.items && this.props.items.length) {
       cartItems = this.props.items
-    } else if (Object.keys(this.state.guestCart).length !== 0) {
+    } else if (this.state.guestCart.length !== 0) {
       cartItems = this.state.guestCart
     } else {
       return <h3>Your cart is empty!</h3>

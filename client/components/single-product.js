@@ -51,6 +51,7 @@ class SingleProduct extends React.Component {
         for (let i = 0; i < guestCart.length; i++) {
           if (guestCart[i].productId === item.productId) {
             guestCart[i].quantity = item.quantity
+            break
           } else if (i === guestCart.length - 1) {
             guestCart.push(item)
           }
