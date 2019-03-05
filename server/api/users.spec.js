@@ -21,7 +21,7 @@ describe('User routes', () => {
         email: codysEmail,
         firstName: codysFirstName,
         lastName: codysLastName,
-        isAdmin: true
+        isAdmin: Boolean(true)
       })
     })
 
