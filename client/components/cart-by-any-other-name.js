@@ -10,6 +10,8 @@ class Cart extends React.Component {
       guestCart: JSON.parse(localStorage.getItem('guestCart'))
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleDeleteItem = this.handleDeleteItem.bind(this)
   }
 
   componentDidMount() {
@@ -17,12 +19,8 @@ class Cart extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('componentDidUpdate got triggered')
     if (this.props.cart !== prevProps.cart && this.props.isLoggedIn) {
       this.props.loadCartItems(this.props.cart.id)
-    }
-    if (this.props.items !== prevProps.items) {
-      console.log('items changed', this.props.items)
     }
   }
 
@@ -50,8 +48,18 @@ class Cart extends React.Component {
     const newQuant = evt.target.value
     if (this.props.isLoggedIn) {
       this.props.updateQuantity(newQuant, productId)
+    } else {
+      const currentCart = JSON.parse(localStorage.getItem('guestCart'))
+      const newCart = currentCart.map(item => {
+        if (item.productId === productId) {
+          return {...item, quantity: newQuant}
+        } else {
+          return item
+        }
+      })
+      localStorage.setItem('guestCart', JSON.stringify(newCart))
+      this.setState({guestCart: newCart})
     }
-    // then do guestCart
   }
 
   handleDeleteItem(evt, productId) {
@@ -61,7 +69,6 @@ class Cart extends React.Component {
   }
 
   render() {
-    console.log('render triggered')
     let cartItems
     if (this.props.items && this.props.items.length) {
       cartItems = this.props.items
@@ -123,7 +130,6 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log('mapStateToProps gets triggered')
   return {
     items: state.orderProduct.items, // Rows from OrderProduct table
     cart: state.orders.cart, // Row from Order table

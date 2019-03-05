@@ -40,7 +40,6 @@ export const editItem = (quantity, productId) => async dispatch => {
     const {data} = await axios.put(`/api/orderProducts/${productId}`, {
       quantity
     })
-    console.log('data: ', data)
     dispatch(itemEdited(data))
   } catch (error) {
     console.error(error)
@@ -67,8 +66,6 @@ export default function(state = orderProductsInitialState, action) {
     case GOT_CART_ITEMS:
       return {...state, items: action.items}
     case ITEM_EDITED:
-      console.log('action.item: ', action.item)
-      console.log('state.items: ', state.items)
       return {
         ...state,
         items: state.items.map(item => {
