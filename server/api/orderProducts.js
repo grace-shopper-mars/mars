@@ -63,9 +63,7 @@ router.delete('/:productId', async (req, res, next) => {
 
 router.get('/:orderId', async (req, res, next) => {
   try {
-    console.log('we hit the backend get request orderProducts')
     const orderId = req.session.order
-    console.log(orderId)
     const cartItems = await OrderProduct.findAll({
       where: {
         orderId
