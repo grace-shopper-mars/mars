@@ -62,10 +62,16 @@ class Cart extends React.Component {
     }
   }
 
-  handleDeleteItem(evt, productId) {
+  handleDeleteItem(evt, productId, productName) {
     if (this.props.isLoggedIn) {
       this.props.removeFromCart(productId)
+    } else {
+      const currentCart = JSON.parse(localStorage.getItem('guestCart'))
+      const newCart = currentCart.filter(item => item.productId !== productId)
+      localStorage.setItem('guestCart', JSON.stringify(newCart))
+      this.setState({guestCart: newCart})
     }
+    alert(`You have removed ${productName} from your cart!`)
   }
 
   render() {
@@ -99,7 +105,13 @@ class Cart extends React.Component {
               <p>Price: ${item.product.price}</p>
               <button
                 type="button"
-                onClick={event => this.handleDeleteItem(event, item.productId)}
+                onClick={event =>
+                  this.handleDeleteItem(
+                    event,
+                    item.productId,
+                    item.product.name
+                  )
+                }
               >
                 Remove from cart
               </button>

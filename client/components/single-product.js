@@ -30,11 +30,6 @@ class SingleProduct extends React.Component {
           orderId: this.props.cart.id,
           quantity
         })
-        alert(
-          `${this.state.value} of the item ${
-            this.props.currentProduct.name
-          } added to cart!`
-        )
       } catch (err) {
         console.log(err)
       }
@@ -59,6 +54,11 @@ class SingleProduct extends React.Component {
       }
       localStorage.setItem('guestCart', JSON.stringify(guestCart))
     }
+    alert(
+      `${this.state.value} of the item ${
+        this.props.currentProduct.name
+      } added to cart!`
+    )
   }
 
   render() {
