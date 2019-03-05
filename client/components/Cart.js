@@ -49,7 +49,7 @@ class Cart extends React.Component {
     let cartItems
     if (this.props.items && this.props.items.length) {
       cartItems = this.props.items
-    } else if (this.state.guestCart.length !== 0) {
+    } else if (this.state.guestCart.length !== 0 && !this.props.isLoggedIn) {
       cartItems = this.state.guestCart
     } else {
       return <h3>Your cart is empty!</h3>
