@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getCartItems} from '../store/orderProduct'
+import {getCartItems, editItem, deleteItem} from '../store/orderProduct'
 import axios from 'axios'
 
 class Cart extends React.Component {
@@ -14,14 +14,15 @@ class Cart extends React.Component {
 
   componentDidMount() {
     this.props.loadCartItems(this.props.cart.id)
-    console.log('mount cart = ', this.props.cart)
   }
 
   componentDidUpdate(prevProps) {
+    console.log('componentDidUpdate got triggered')
     if (this.props.cart !== prevProps.cart && this.props.isLoggedIn) {
-      console.log('user logged in at update')
       this.props.loadCartItems(this.props.cart.id)
-      console.log('update cart = ', this.props.cart)
+    }
+    if (this.props.items !== prevProps.items) {
+      console.log('items changed', this.props.items)
     }
   }
 
@@ -45,7 +46,22 @@ class Cart extends React.Component {
     }
   }
 
+  handleChange(evt, productId) {
+    const newQuant = evt.target.value
+    if (this.props.isLoggedIn) {
+      this.props.updateQuantity(newQuant, productId)
+    }
+    // then do guestCart
+  }
+
+  handleDeleteItem(evt, productId) {
+    if (this.props.isLoggedIn) {
+      this.props.removeFromCart(productId)
+    }
+  }
+
   render() {
+    console.log('render triggered')
     let cartItems
     if (this.props.items && this.props.items.length) {
       cartItems = this.props.items
@@ -62,8 +78,24 @@ class Cart extends React.Component {
             <div key={item.productId}>
               <h3>{item.product.name}</h3>
               <img src={item.product.imageUrl} width="200px" />
-              <p>Quantity: {item.quantity}</p>
+              <label>Quantity: </label>
+              <select
+                value={item.quantity}
+                onChange={event => this.handleChange(event, item.productId)}
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
               <p>Price: ${item.product.price}</p>
+              <button
+                type="button"
+                onClick={event => this.handleDeleteItem(event, item.productId)}
+              >
+                Remove from cart
+              </button>
             </div>
           ))}
         </div>
@@ -91,6 +123,7 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log('mapStateToProps gets triggered')
   return {
     items: state.orderProduct.items, // Rows from OrderProduct table
     cart: state.orders.cart, // Row from Order table
@@ -99,7 +132,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  loadCartItems: orderId => dispatch(getCartItems(orderId))
+  loadCartItems: orderId => dispatch(getCartItems(orderId)),
+  updateQuantity: (quantity, productId) =>
+    dispatch(editItem(quantity, productId)),
+  removeFromCart: productId => dispatch(deleteItem(productId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
