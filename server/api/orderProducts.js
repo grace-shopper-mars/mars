@@ -26,6 +26,27 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.put('/:productId', async (req, res, next) => {
+  try {
+    const [, orderProductArray] = await OrderProduct.update(
+      {
+        quantity: req.body.quantity
+      },
+      {
+        where: {
+          productId: req.params.productId,
+          orderId: req.session.order
+        },
+        returning: true,
+        plain: true
+      }
+    )
+    res.json(orderProductArray)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/:orderId', async (req, res, next) => {
   try {
     console.log('we hit the backend get request orderProducts')
