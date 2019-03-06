@@ -84,11 +84,11 @@ class Cart extends React.Component {
       return <h3>Your cart is empty!</h3>
     }
     return (
-      <div>
-        <h1>Cart</h1>
-        <div>
+      <div className="cart">
+        <div className="cartItems">
+          <h1 className="cartName">Cart</h1>
           {cartItems.map(item => (
-            <div key={item.productId}>
+            <div className="item" key={item.productId}>
               <h3>{item.product.name}</h3>
               <img src={item.product.imageUrl} width="200px" />
               <label>Quantity: </label>
@@ -118,23 +118,28 @@ class Cart extends React.Component {
             </div>
           ))}
         </div>
-        <div>
-          <h3>Total Cost: </h3>
-          <p>
-            ${cartItems.reduce(function(accum, currVal) {
-              return accum + Number(currVal.product.price)
-            }, 0)}
-          </p>
-        </div>
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <label>Shipping Address:</label>
-            <input type="text" name="shippingAddress" />
-            <label>Billing Address:</label>
-            <input type="text" name="billingAddress" />
-            <br />
-            <button type="submit">Checkout</button>
-          </form>
+        <div className="checkout">
+          <div>
+            <h4>Total Cost: </h4>
+            <p>
+              ${cartItems.reduce(function(accum, currVal) {
+                return accum + Number(currVal.product.price)
+              }, 0)}
+            </p>
+          </div>
+          <br />
+          <div className="checkoutForm">
+            <form onSubmit={this.handleSubmit}>
+              <label>Shipping Address:</label>
+              <input type="text" name="shippingAddress" />
+              <label>Billing Address:</label>
+              <input type="text" name="billingAddress" />
+              <br />
+              <button className="checkoutButton" type="submit">
+                CHECKOUT
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     )

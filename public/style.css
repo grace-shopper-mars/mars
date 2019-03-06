@@ -41,7 +41,6 @@ nav a:hover {
   color: #202b47;
   border-radius: 5px;
   background-color: rgb(255, 255, 226);
-  box-shadow: #d3d3d3;
 }
 
 nav {
@@ -98,12 +97,59 @@ form div {
   color: #5c5c5c;
   border-radius: 2px;
   background-color: rgb(250, 250, 250);
-  box-shadow: #d3d3d3;
   border: solid;
 }
 
 .quantity {
   display: flex;
+}
+
+.cart {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cartItems {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 2em;
+}
+
+.checkout {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+  font-size: 2em;
+}
+
+.checkoutForm {
+  background-color: rgb(165, 162, 162);
+  padding: 2em;
+}
+
+.checkoutButton {
+  background-color: rgb(250, 250, 173);
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+input {
+  margin: 20px 0;
+  height: 2em;
+  width: 20em;
 }
 
 * {
