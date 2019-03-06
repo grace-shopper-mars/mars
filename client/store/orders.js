@@ -23,6 +23,21 @@ export const getCart = userId => async dispatch => {
   }
 }
 
+export const placeOrder = (
+  shippingAddress,
+  billingAddress
+) => async dispatch => {
+  try {
+    await axios.put('/api/orders/checkout', {
+      shippingAddress,
+      billingAddress
+    })
+    dispatch(gotCart({}))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 //initial state
 const ordersInitialState = {
   allOrders: [],
