@@ -104,6 +104,7 @@ class Cart extends React.Component {
               </select>
               <p>Price: ${item.product.price}</p>
               <button
+                className="remove"
                 type="button"
                 onClick={event =>
                   this.handleDeleteItem(
