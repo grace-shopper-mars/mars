@@ -125,7 +125,12 @@ class Cart extends React.Component {
             <h4>Total Cost: </h4>
             <p>
               ${cartItems.reduce(function(accum, currVal) {
-                return accum + Number(currVal.product.price)
+                return Number(
+                  (
+                    accum +
+                    Number(currVal.product.price) * Number(currVal.quantity)
+                  ).toFixed(2)
+                )
               }, 0)}
             </p>
           </div>
