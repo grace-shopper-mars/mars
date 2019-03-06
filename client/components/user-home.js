@@ -12,7 +12,7 @@ export const UserHome = props => {
   return (
     <div className="home">
       <div className="homeInfo">
-        <h2>Welcome, {email}</h2>
+        <h3>Welcome, {email}</h3>
         <Link to="/edit">
           <small>edit account</small>
         </Link>
