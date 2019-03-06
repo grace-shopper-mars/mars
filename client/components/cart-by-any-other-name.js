@@ -4,6 +4,13 @@ import {getCartItems, editItem, deleteItem} from '../store/orderProduct'
 import {placeOrder} from '../store/orders'
 import toastr from 'toastr'
 
+toastr.options = {
+  closeButton: true,
+  showMethod: 'slideDown',
+  timeOut: 1000,
+  positionClass: 'toast-bottom-right'
+}
+
 class Cart extends React.Component {
   constructor(props) {
     super(props)
@@ -32,9 +39,9 @@ class Cart extends React.Component {
     if (this.props.isLoggedIn) {
       const id = this.props.cart.id
       this.props.checkout(id, shippingAddress, billingAddress)
-      toastr.info('Your order has been placed')
+      toastr.success('Your order has been placed')
     } else {
-      toastr.info('You have to be logged in to checkout!')
+      toastr.warning('You have to be logged in to checkout!')
     }
   }
 
@@ -65,7 +72,7 @@ class Cart extends React.Component {
       localStorage.setItem('guestCart', JSON.stringify(newCart))
       this.setState({guestCart: newCart})
     }
-    toastr.info(`You have removed ${productName} from your cart!`)
+    toastr.success(`You have removed ${productName} from your cart!`)
   }
 
   render() {

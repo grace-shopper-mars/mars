@@ -55,12 +55,13 @@ class SingleProduct extends React.Component {
       }
       localStorage.setItem('guestCart', JSON.stringify(guestCart))
     }
-    // alert(
-    //   `${this.state.value} of the item ${
-    //     this.props.currentProduct.name
-    //   } added to cart!`
-    // )
-    toastr.info(
+    toastr.options = {
+      closeButton: true,
+      showMethod: 'slideDown',
+      timeOut: 600,
+      positionClass: 'toast-bottom-right'
+    }
+    toastr.success(
       `${this.state.value} of the item ${
         this.props.currentProduct.name
       } added to cart!`
