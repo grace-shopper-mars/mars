@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {getOneProductThunk} from '../store/allProducts'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
+import toastr from 'toastr'
 
 class SingleProduct extends React.Component {
   constructor(props) {
@@ -54,7 +55,12 @@ class SingleProduct extends React.Component {
       }
       localStorage.setItem('guestCart', JSON.stringify(guestCart))
     }
-    alert(
+    // alert(
+    //   `${this.state.value} of the item ${
+    //     this.props.currentProduct.name
+    //   } added to cart!`
+    // )
+    toastr.info(
       `${this.state.value} of the item ${
         this.props.currentProduct.name
       } added to cart!`

@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getCartItems, editItem, deleteItem} from '../store/orderProduct'
-import axios from 'axios'
+import {placeOrder} from '../store/orders'
+import toastr from 'toastr'
 
 class Cart extends React.Component {
   constructor(props) {
@@ -24,23 +25,16 @@ class Cart extends React.Component {
     }
   }
 
-  async handleSubmit(evt) {
+  handleSubmit(evt) {
+    evt.preventDefault()
     const shippingAddress = evt.target.shippingAddress.value
     const billingAddress = evt.target.billingAddress.value
     if (this.props.isLoggedIn) {
       const id = this.props.cart.id
-      try {
-        await axios.put('/api/orders/checkout', {
-          id,
-          shippingAddress,
-          billingAddress
-        })
-        alert('Your order has been placed')
-      } catch (err) {
-        console.log(err)
-      }
+      this.props.checkout(id, shippingAddress, billingAddress)
+      toastr.info('Your order has been placed')
     } else {
-      alert('You have to be logged in to checkout!')
+      toastr.info('You have to be logged in to checkout!')
     }
   }
 
@@ -71,7 +65,7 @@ class Cart extends React.Component {
       localStorage.setItem('guestCart', JSON.stringify(newCart))
       this.setState({guestCart: newCart})
     }
-    alert(`You have removed ${productName} from your cart!`)
+    toastr.info(`You have removed ${productName} from your cart!`)
   }
 
   render() {
@@ -159,9 +153,9 @@ const mapDispatchToProps = dispatch => ({
   loadCartItems: orderId => dispatch(getCartItems(orderId)),
   updateQuantity: (quantity, productId) =>
     dispatch(editItem(quantity, productId)),
-  removeFromCart: productId => dispatch(deleteItem(productId))
+  removeFromCart: productId => dispatch(deleteItem(productId)),
+  checkout: (shippingAddress, billingAddress) =>
+    dispatch(placeOrder(shippingAddress, billingAddress))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
-
-// adding fake text to create change.
