@@ -10,11 +10,17 @@ export const UserHome = props => {
   const {email} = props
 
   return (
-    <div>
-      <h3>Welcome, {email}</h3>
-      <Link to="/edit">
-        <small>edit account</small>
-      </Link>
+    <div className="home">
+      <div className="homeInfo">
+        <h2>Welcome, {email}</h2>
+        <Link to="/edit">
+          <small>edit account</small>
+        </Link>
+      </div>
+      <img
+        className="background"
+        src="https://wallpaperplay.com/walls/full/9/8/e/54275.jpg"
+      />
     </div>
   )
 }
